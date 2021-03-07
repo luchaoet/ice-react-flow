@@ -1,0 +1,35 @@
+.container {
+  //   display: inline-flex;
+  padding: 0 0 0 200px;
+}
+.overlayContainer {
+  //   width: 50px;
+  height: 100px;
+  background: #333;
+  color: #fff;
+  border-radius: 4px;
+  padding: 4px 10px;
+  position: absolute;
+}
+.overlayContainer[x-placement='bottom'] {
+  &:after {
+    position: absolute;
+    content: '';
+    top: -1px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background-color: red;
+  }
+}
+.overlayContainer[x-placement='top'] {
+  &:after {
+    position: absolute;
+    content: '';
+    bottom: -1px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background-color: red;
+  }
+}

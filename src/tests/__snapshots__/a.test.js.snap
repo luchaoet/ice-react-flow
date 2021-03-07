@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render NodeView 1`] = `
+<div
+  className="container"
+>
+  NodeView
+</div>
+`;
+
+exports[`render RpaIcon 1`] = `
+<i
+  className="next-icon next-medium"
+  style={Object {}}
+>
+  <svg
+    className="next-icon-remote"
+    focusable={false}
+  >
+    <use
+      xlinkHref="#iconkongjian-keshihua1"
+    />
+  </svg>
+</i>
+`;
+
+exports[`renders 1`] = `
+<div
+  className="container"
+>
+  NodeView
+</div>
+`;
+
+exports[`renders 2`] = `
+<i
+  className="next-icon next-medium"
+  style={Object {}}
+>
+  <svg
+    className="next-icon-remote"
+    focusable={false}
+  >
+    <use
+      xlinkHref="#iconkongjian-keshihua1"
+    />
+  </svg>
+</i>
+`;
+
+exports[`renders NodeView 1`] = `
+<div
+  className="container"
+>
+  NodeView
+</div>
+`;
+
+exports[`renders RpaIcon 1`] = `
+<i
+  className="next-icon next-medium"
+  style={Object {}}
+>
+  <svg
+    className="next-icon-remote"
+    focusable={false}
+  >
+    <use
+      xlinkHref="#iconkongjian-keshihua1"
+    />
+  </svg>
+</i>
+`;
