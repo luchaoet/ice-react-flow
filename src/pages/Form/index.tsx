@@ -43,17 +43,15 @@ function FormCom() {
       name: 'roles',
       label: '权限类型',
       dataSource: [{label: '测试1', value: 'test'}, {label: '测试2', value: 'test1'}],
-      defaultValue: 'test1',
-      hidden: (props) => {
-        return props.nikeName == '111'
-      }
+      defaultValue: 'test1'
     },
     {
       component: 'Input.Password',
       name: 'password',
+      required: true,
       label: '密码',
       hidden: (props) => {
-        return false
+        return props.nikeName == '111'
       }
     },
     {
