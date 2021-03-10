@@ -4,7 +4,6 @@ import { Form, Input, Radio, Field, Button, Select, Checkbox, NumberPicker, Swit
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-const Option = Select.Option;
 
 const _formItemLayout = {
 	labelCol: {
@@ -36,7 +35,6 @@ export default class FieldForm extends React.Component {
 
 		renderLabel = (props) => {
 			const { tips, label } = props;
-
 			return (
 				<div style={{
 					display: 'inline-flex'
@@ -50,7 +48,6 @@ export default class FieldForm extends React.Component {
 					}
 				</div>
 			)
-
 		}
 
 		renderFormItem = () => {
@@ -59,11 +56,10 @@ export default class FieldForm extends React.Component {
 
 			return propsConfig.map((props, index) => {
 				const { 
-					label, tips, required, component, help, 
+					name, label, tips, required, component, help, 
 					pattern, patternMessage, validator, 
 					disabled = false, 
 					hidden = false,
-					name,
 					...options 
 				} = props;
 				// 组件id或自定义组件
@@ -71,7 +67,7 @@ export default class FieldForm extends React.Component {
 				// 空值提示
 				const requiredMessage = required ? `${label} 是必填字段` : null;
 				// 自定义校验函数或正则
-				const _validator = validator || (
+				const _validator = validator || ( 
 					pattern
 					? (rule, value) => {
 							return new Promise((resolve, reject) => {
@@ -83,11 +79,11 @@ export default class FieldForm extends React.Component {
 						} 
 					: null
 				);
-				// 禁用
 				const values = getValues();
-				const _disabled = disabled instanceof Function ? disabled(values) : !!disabled;
+				// 禁用
+				const _disabled = disabled instanceof Function ? disabled(values, this.field) : !!disabled;
 				// 隐藏
-				const _hidden = hidden instanceof Function ? hidden(values) : !!hidden;
+				const _hidden = hidden instanceof Function ? hidden(values, this.field) : !!hidden;
 				if(_hidden)return null;
 				// label
 				const _label = this.renderLabel(props);
@@ -110,32 +106,38 @@ export default class FieldForm extends React.Component {
 
 		renderFooter = () => {
 			const { 
-				footer = {
-					actions: ['ok', 'reset'],
-					aligin: 'left'
-				},
+				footer = {},
 				onSubmit = empty,
 				onReset = empty
 			} = this.props;
-			const actions = footer.actions;
-			const aligin = footer.aligin;
 			if(footer === false) return null;
+			const actions = footer.actions || ['ok', 'reset'];
+			const aligin = footer.aligin || 'left';
+			const before = footer.before || [];
+			const after = footer.after || [];
 			const buttons = {
-				ok: <Form.Submit style={{marginRight: 10}} key='ok' validate type="primary" onClick={(v, e) => onSubmit(v, e)}>确定</Form.Submit>,
+				ok: <Form.Submit key='ok' validate type="primary" onClick={(v, e) => onSubmit(v, e)}>确定</Form.Submit>,
 				reset: <Form.Reset key='reset' onClick={() => onReset()}>取消</Form.Reset>
 			}
 			return (
 				<FormItem wrapperCol={{ offset: 6 }} style={{ textAlign: aligin }}>
+					{this.footerPushButtons(before)}
 					{actions.map(v => buttons[v])}
+					{this.footerPushButtons(after)}
 				</FormItem>
 			)
+		}
 
+		footerPushButtons = (btns) => {
+			return btns.map((btn, index) => {
+				const { children, onClick = empty, ...options} = btn;
+				return <Button key={index} onClick={() => onClick(this.field)} {...options}>{children}</Button>
+			})
 		}
 
     render() {
 			const { field, props } = this;
 			const { labelAlign, propsConfig, style, isPreview, formItemLayout: _formItemLayout } = props;
-
 			return (
 				<Form 
 					field={field} 

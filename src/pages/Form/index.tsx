@@ -86,7 +86,16 @@ function FormCom() {
         labelAlign="top" 
         footer={{
           actions: ['ok', 'reset'],
-          aligin: 'right'
+          aligin: 'right',
+          before: [
+            {
+              type: "normal",
+              children: '测试',
+              onClick: (values) => {
+                console.log(values)
+              }
+            }
+          ]
         }}
         propsConfig={propsConfig} 
         style={{width: 600}}

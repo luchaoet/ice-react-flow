@@ -58,3 +58,7 @@ p {
   align-items: center;
   justify-content: center;
 }
+
+.next-btn + .next-btn {
+  margin-left: 10px;
+}
