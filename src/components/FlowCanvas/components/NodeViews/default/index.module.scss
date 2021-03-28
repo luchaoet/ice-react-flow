@@ -1,0 +1,32 @@
+.wrap {
+  flex: 1;
+  //   align-content: flex-start;
+  //   justify-content: center;
+  flex-direction: column;
+  display: flex;
+  background-color: #e2e2e2;
+  padding: 20px;
+}
+.node_wrap {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: 0 auto;
+  border: 1px solid #d4d4d4;
+  border-radius: 6px;
+  background-color: #fff;
+}
+.node_title_wrap {
+  line-height: 36px;
+  border-bottom: 1px solid #d4d4d4;
+  padding: 0 10px;
+  color: #999;
+}
+.node_description {
+  line-height: 18px;
+  padding: 3px 10px;
+  color: #d4d4d4;
+}
+.selected {
+  border: 2px solid #2751fe;
+}

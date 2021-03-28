@@ -12,7 +12,7 @@ const KeyboardShortcut = (WrappedComponent) => {
     }
 
     componentWillUnmount() {
-      document.addEventListener('keydown', this.onkeydown, true);
+      document.removeEventListener('keydown', this.onkeydown, true);
     }
 
     onkeydown(e) {

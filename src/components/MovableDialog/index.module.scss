@@ -1,0 +1,33 @@
+.wrap {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #dcdee3;
+  border-radius: 6px;
+  z-index: 1001;
+  box-shadow: 0 2px 4px 0 #0000001f;
+  //   width: 50%;
+  //   transition: width, height 0.2s;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  user-select: none;
+  cursor: move;
+}
+.icon {
+  cursor: auto;
+  i {
+    cursor: pointer;
+  }
+  i + i {
+    margin-left: 10px;
+  }
+}
+.body {
+  padding: 20px;
+}
+.iframe {
+  border: 0;
+}

@@ -1,3 +1,4 @@
 import type from './type';
+import delay from './delay';
 
-export { type };
+export { type, delay };

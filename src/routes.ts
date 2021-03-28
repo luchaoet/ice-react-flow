@@ -1,7 +1,9 @@
 import MainLayout from '@/layouts/MainLayout';
 import Dashboard from '@/pages/Dashboard';
+import Monaco from '@/pages/Monaco';
 import Flow from '@/pages/Flow';
 import Form from '@/pages/Form';
+import DialogTest from '@/pages/DialogTest';
 
 const routerConfig = [
   {
@@ -17,8 +19,16 @@ const routerConfig = [
         component: Form
       },
       {
-        path: '/',
+        path: 'dialog',
+        component: DialogTest
+      },
+      {
+        path: '/flow',
         component: Flow,
+      },
+      {
+        path: '/',
+        component: Monaco,
       },
     ],
   },

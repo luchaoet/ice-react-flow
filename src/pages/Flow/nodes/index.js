@@ -1,3 +1,2 @@
 import brower from './brower';
-
-export default [brower];
+export default [...brower];

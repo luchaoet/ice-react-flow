@@ -3,7 +3,7 @@ import React from 'react';
 import ModuleMenu from '@/components/ModuleMenu';
 import Overlay from '@/components/Overlay';
 import Canvas from '@/components/Canvas';
-import ComponentInput from '@/components/ComponentInput/index';
+import ComponentInput from '@/components/ComponentInput';
 // import NodeConfigDrawer from '@/components/NodeConfigDrawer';
 import RpaIcon from '@/components/RpaIcon';
 
@@ -23,6 +23,7 @@ def start()
 
   return (
     <>
+    {/* <Overlay /> */}
       <ModuleMenu />
       <Canvas value={value} />
       {/* <NodeConfigDrawer
@@ -37,7 +38,7 @@ def start()
 
       <div style={{ height: 500 }}>test</div>
 
-      <Overlay />
+      
 
       <div style={{ height: 500 }}>test</div>
 
