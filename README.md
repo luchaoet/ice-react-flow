@@ -59,3 +59,9 @@ $ npm start  # visit http://localhost:3333
 ├── .gitignore
 └── [j,t]sconfig.json
 ```
+
+
+### div 中的元素滚动
+https://developer.mozilla.org/zh-CN/docs/web/api/element/scrollintoview
+
+document.getElementsByClassName('Node--node_wrap--3CO4uC1')[10].scrollIntoView({behavior: "smooth", block: "start", inline: "center"});

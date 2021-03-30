@@ -4,6 +4,8 @@ import cx from 'classnames'
 import styles from './index.module.scss'
 import DefaultNodeView from '../NodeViews/default'
 import { Consumer } from "../../utils/context";
+import ClickOutside from '../../libs/ClickOutside'
+import Template from '../Template'
 
 const nodesTemp = {}
 const _nodeViews = {
@@ -23,28 +25,42 @@ export default class Node extends React.Component {
 	}
 
 	renderNodeView = () => {
-		const {views, view, title, description} = this.props;
+		const {views, node } = this.props;
+		const { view, title, description, errors } = node;
 		const nvs = {
 			..._nodeViews,
 			...views
 		}
 		const Com = typeof view === 'function' ? view : nvs[view || 'default'];
-		return <Com title={title} description={description} />
+		return <Com title={title} description={description} errors={errors} />
 	}
 
 	get handleProps() {
-		const { type, nodes } = this.props;
+		const { type, nodes, node } = this.props;
 		const defaultProps = nodes.find(node => node.type === type) || {};
 		return {
 			...defaultProps,
 			...this.props
 		}
 	}
+
+	onClickOutside = () => {
+		const { node } = this.props;
+		node.setAttributes({selected: false})
+	}
+
+	onNodeClick = () => {
+		const {node, onNodeSelect} = this.props;
+		const { disabled, canSelect }= node;
+		if(!disabled && canSelect) {
+			node.onNodeSelect(); 
+			onNodeSelect(node);
+		}
+	}
   
   render() {
-		const { type, uuid, disabled, selectedNodes, canBeforeAdd, canAfterAdd, canDraggable, canSelect, onNodeClick } = this.handleProps;
-
-		const selected = selectedNodes.find(item => item.uuid === uuid);
+	  const { node } = this.props;
+		const { type, id, disabled, canBeforeAdd, canAfterAdd, canDraggable, canSelect, selected } = node;
 		const className = cx(
 			styles.node_wrap, 
 			{
@@ -52,20 +68,24 @@ export default class Node extends React.Component {
 				[styles.disabled]: disabled
 			}
 		)
+		const nextNode = node.getNextNode();
+		const nextNodeCanBeforeAdd = nextNode?.getValue('canBeforeAdd');
 		
     return (
 			<React.Fragment>
-				{canBeforeAdd && <AddLine />}
-				<div 
+				<Template show={canBeforeAdd} tag={AddLine} nextNode={node} />
+				<ClickOutside 
+					tag='div'
 					className={className}
-					onClick={() => !disabled && canSelect && onNodeClick({ ...this.props, selected })}
-					type={type}
-					uuid={uuid}
+					onClick={this.onNodeClick}
+					id={id}
+					selected={selected}
 					draggable={canDraggable}
+					onClickOutside={this.onClickOutside}
 				>
 					{this.renderNodeView()}
-				</div>
-				{canAfterAdd && <AddLine />}
+				</ClickOutside>
+				<Template show={canAfterAdd && !nextNodeCanBeforeAdd} tag={AddLine} preNode={node} />
 			</React.Fragment>
     )
   }

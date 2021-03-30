@@ -1,3 +1,5 @@
-const { eslint } = require('@ice/spec');
+const { eslint, deepmerge } = require('@ice/spec');
 
-module.exports = eslint;
+module.exports = deepmerge(eslint, {
+  indent: ['error', 'tab'],
+});

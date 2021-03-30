@@ -1,10 +1,12 @@
 import React from 'react';
 import Node from "./components/Node";
 import styles from './index.module.scss'
-import NodeGenerate from './utils/NodeGenerate'
+import FlowNode from './utils/FlowNode'
 import { Provider } from './utils/context'
+import createFlowNode from './utils/createFlowNode'
+import FieldForm from './components/FieldForm'
 
-export default class FlowCanvas extends React.Component {
+class FlowCanvas extends React.Component {
   NodeGenerateCopy = null
 	constructor(props){
 		super(props);
@@ -14,30 +16,8 @@ export default class FlowCanvas extends React.Component {
     this.state = {
       nodes: props.nodes,
       views: props.views,
-      flowData: [
-        {
-          uuid: 'ee312-123qe-q2wqwd-213qwe-qwe23-sdsa',
-          type: 'root',
-          title:'流程1',
-          children: [
-            {
-              uuid: 'eqw12-123qe-qweqwd-213qwe-qwe23-sdsa',
-              type: "brower_open",
-              title: '打开浏览器',
-              description: '在浏览器中打来一个新的窗口',
-              initProps: {},
-            },
-            {
-              uuid: 'eqw12-123qe-qweqwd-213qwe-qwe23-swsa',
-              type: "brower_open",
-              title: '打开浏览器',
-              description: '在浏览器中打来一个新的窗口',
-              initProps: {},
-            }
-          ]
-        }
-      ],
-      selectedNodes: []
+      flowData: props.flowData,
+      flowDataDocument: createFlowNode(props.flowData),
     }
   }
 
@@ -45,6 +25,8 @@ export default class FlowCanvas extends React.Component {
     document.addEventListener('dragstart', this.dragstart, true)
     // document.addEventListener('ondrag', this.ondrag, true)
     // document.addEventListener('ondrop', this.ondrop, true)
+    window.FlowCanvas = this;
+    // window.oncontextmenu = () => false;
     
   }
 
@@ -69,38 +51,21 @@ export default class FlowCanvas extends React.Component {
     // console.log(222)
   }
 
-  onNodeClick = (node) => {
-    this.setState({
-      selectedNodes: [node]
-    })
-  }
-
-  get handleFlowData() {
-    const { flowData, nodes } = this.state;
-
-
-
-
-
-    // console.log(flowData)
-    return this.state.flowData;
-  }
-  
   render() {
-    const { nodes, views, selectedNodes } = this.state;
-    const _flowData = this.handleFlowData;
+    const { nodes, views, flowDataDocument } = this.state;
+    const { onNodeSelect } = this.props;
+    console.log(flowDataDocument)
     return (
       <div className={styles.wrap}>
         {
-          _flowData[0].children.map((node, index) => {
+          flowDataDocument[0].children.map((node, index) => {
             return (
               <Node 
                 nodes={nodes}
                 views={views}
                 key={index} 
-                selectedNodes={selectedNodes} 
-                onNodeClick={this.onNodeClick}
-                {...node}
+                node={node}
+                onNodeSelect={onNodeSelect}
               />
             )
           })
@@ -108,4 +73,9 @@ export default class FlowCanvas extends React.Component {
       </div>
     )
   }
+}
+
+export {
+  FlowCanvas,
+  FieldForm
 }

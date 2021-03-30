@@ -6,10 +6,12 @@ export default {
   canAfterAdd: true,
   disabled: false,
   canSelect: true,
-  initProps: {
-    name: 'url',
-    title: '网页地址',
-    component: 'Input',
-    defaultValue: 'www.baidu.com',
-  },
+  initProps: [
+    {
+      name: 'url',
+      title: '网页地址',
+      component: 'Input',
+      defaultValue: 'www.baidu.com',
+    },
+  ],
 };
