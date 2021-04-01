@@ -23,6 +23,11 @@ export default class AddLine extends React.Component {
 
   onDrop = (e) => {
     this.setState({status: null})
+    let nodes = e.dataTransfer.getData("nodes");
+    nodes = JSON.parse(nodes);
+    const {preNode, nextNode} = this.props;
+    preNode && preNode.after(nodes);
+    nextNode && nextNode.before(nodes);
   }
 
   onDragOver = (e) => {
@@ -57,7 +62,7 @@ export default class AddLine extends React.Component {
             tag={Icon} 
             type="rpaGroup-" 
             className={styles.add_icon} 
-            onClick={this.onAddClick} 
+            // onClick={this.onAddClick} 
           />
         </div>
         <Icon type='rpaxiangxiajiantou' className={styles.arrow}/>

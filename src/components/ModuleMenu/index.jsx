@@ -1,12 +1,9 @@
 import React from 'react';
 import { Collapse } from '@alifd/next';
 import styles from './index.module.scss';
-// import modules from '@/nodes';
-
 const Panel = Collapse.Panel;
-// console.log('all modules => ', modules);
 
-const modules = [{ name: '测试', nodes: [{ name: 'a', type: 'test' }] }];
+const modules = [{ name: '网页', nodes: [{ name: '打开网页', type: 'brower_open' }] }];
 
 function ModuleMenu() {
   return (

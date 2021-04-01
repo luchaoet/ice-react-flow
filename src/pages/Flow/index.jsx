@@ -85,6 +85,7 @@ export default class Flow extends React.Component {
         <FlowCanvas 
           nodes={nodes} 
           views={views}
+          nodeViews={views}
           flowData={_flowData}
           onNodeSelect={node => this.setState({selectedNode: node})}
         />

@@ -1,5 +1,6 @@
-import uuid from './uuid';
-export default class FlowNode {
+import uuid from '../utils/uuid';
+
+export default class Node {
   constructor(props = {}) {
     this.type = props.type;
     this.id = uuid();

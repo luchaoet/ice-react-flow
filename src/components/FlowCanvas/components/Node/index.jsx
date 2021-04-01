@@ -57,6 +57,12 @@ export default class Node extends React.Component {
 			onNodeSelect(node);
 		}
 	}
+
+	onDragstart = (e) => {
+		const nodeType = e.target.attributes?.nodetype?.value;
+    const nodeUuid = e.target.attributes?.nodeuuid?.value;
+		e.dataTransfer.setData("nodes", JSON.stringify({nodeType, nodeUuid}));
+	}
   
   render() {
 	  const { node } = this.props;
@@ -79,9 +85,12 @@ export default class Node extends React.Component {
 					className={className}
 					onClick={this.onNodeClick}
 					id={id}
+					nodetype={type}
+					nodeuuid={id}
 					selected={selected}
 					draggable={canDraggable}
 					onClickOutside={this.onClickOutside}
+					onDragStart={e => this.onDragstart(e)}
 				>
 					{this.renderNodeView()}
 				</ClickOutside>

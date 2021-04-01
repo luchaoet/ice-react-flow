@@ -5,19 +5,23 @@ import FlowNode from './utils/FlowNode'
 import { Provider } from './utils/context'
 import createFlowNode from './utils/createFlowNode'
 import FieldForm from './components/FieldForm'
+import FlowDocument from './class/FlowDocument'
 
 class FlowCanvas extends React.Component {
   NodeGenerateCopy = null
 	constructor(props){
 		super(props);
     this.dragstart = this.dragstart.bind(this)
-    this.ondrag = this.ondrag.bind(this)
-    this.ondrop = this.ondrop.bind(this)
+    // this.ondrag = this.ondrag.bind(this)
+    // this.ondrop = this.ondrop.bind(this)
+
+    const { nodes, flowData, nodeViews } = props;
     this.state = {
-      nodes: props.nodes,
-      views: props.views,
-      flowData: props.flowData,
+      nodes,
+      views: nodeViews,
+      flowData,
       flowDataDocument: createFlowNode(props.flowData),
+      flowDocument: new FlowDocument({ flowData, nodes, nodeViews})
     }
   }
 
@@ -27,7 +31,6 @@ class FlowCanvas extends React.Component {
     // document.addEventListener('ondrop', this.ondrop, true)
     window.FlowCanvas = this;
     // window.oncontextmenu = () => false;
-    
   }
 
   componentWillUnmount() {
@@ -38,8 +41,8 @@ class FlowCanvas extends React.Component {
 
   dragstart(e) {
     const nodeType = e.target.attributes?.nodetype?.value;
-    const nodeUuid = e.target.attributes?.nodeuuid?.value;
-    console.log('dragstart:', 'nodeType-',nodeType, ', nodeUuid-',nodeUuid)
+    const nodeUuid = e.target.attributes?.nodeuuid?.value || '';
+    e.dataTransfer.setData("nodes", JSON.stringify({nodeType, nodeUuid}));
   } 
 
   ondrag(e) {
@@ -52,9 +55,9 @@ class FlowCanvas extends React.Component {
   }
 
   render() {
-    const { nodes, views, flowDataDocument } = this.state;
+    const { nodes, views, flowDataDocument, flowDocument } = this.state;
     const { onNodeSelect } = this.props;
-    console.log(flowDataDocument)
+    console.log('flowDocument', flowDocument)
     return (
       <div className={styles.wrap}>
         {
