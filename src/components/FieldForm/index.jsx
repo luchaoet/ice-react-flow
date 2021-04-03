@@ -28,11 +28,9 @@ const components = {
 
 export default class FieldForm extends React.Component {
 		field = new Field(this);
-
-		onChange = (v, name) => {
-			this.field.setvalue(name, v)
+		componentWillUnmount() {
+			this.setState = () => false
 		}
-
 		renderLabel = (props) => {
 			const { tips, label } = props;
 			return (
@@ -66,19 +64,16 @@ export default class FieldForm extends React.Component {
 				const Com = typeof component === 'string' ? components[component] : component;
 				// 空值提示
 				const requiredMessage = required ? `${label} 是必填字段` : null;
-				// 自定义校验函数或正则
-				const _validator = validator || ( 
-					pattern
-					? (rule, value) => {
-							return new Promise((resolve, reject) => {
-								if(!pattern.test(value)) {
-									reject([new Error(patternMessage || `${label} 格式错误`)]);
-								}
-								resolve()
-							})
-						} 
-					: null
-				);
+				// 校验函数
+				let _validator = null;
+				if(validator) {
+					_validator = validator.bind(this, this.field, props)
+				}else if(pattern) {
+					_validator = (rule, value, callback) => {
+						if(!value && !required) callback()
+						return pattern.test(value) ? callback() : callback(patternMessage || `${label} 格式错误`)
+					}
+				}
 				const values = getValues();
 				// 禁用
 				const _disabled = disabled instanceof Function ? disabled(values, this.field) : !!disabled;
@@ -97,7 +92,7 @@ export default class FieldForm extends React.Component {
 						fullWidth
 						validator={_validator}
 					>
-						<Com name={name} disabled={_disabled} {...options} onChange={v => this.onChange.bind(this, v, name)} />
+						<Com name={name} disabled={_disabled} {...options} />
 						{help && <p>{help}</p>}
 					</FormItem>
 				)
