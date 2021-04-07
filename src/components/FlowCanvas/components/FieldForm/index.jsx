@@ -94,18 +94,15 @@ export default class FieldForm extends React.Component {
 				// 空值提示
 				const requiredMessage = required ? `${label} 是必填字段` : null;
 				// 自定义校验函数或正则
-				const _validator = validator || ( 
-					pattern
-					? (rule, value) => {
-							return new Promise((resolve, reject) => {
-								if(!pattern.test(value)) {
-									reject([new Error(patternMessage || `${label} 格式错误`)]);
-								}
-								resolve()
-							})
-						} 
-					: null
-				);
+				let _validator = null;
+				if(validator) {
+					_validator = validator.bind(this, this.field, props)
+				}else if(pattern) {
+					_validator = (rule, value, callback) => {
+						if(!value && !required) callback()
+						return pattern.test(value) ? callback() : callback(patternMessage || `${label} 格式错误`)
+					}
+				}
 				const values = getValues();
 				// 禁用
 				const _disabled = disabled instanceof Function ? disabled(values, this.field) : !!disabled;
@@ -139,7 +136,7 @@ export default class FieldForm extends React.Component {
 			} = this.props;
 			if(footer === false) return null;
 			const actions = footer.actions || ['ok', 'reset'];
-			const aligin = footer.aligin || 'left';
+			const align = footer.align || 'left';
 			const before = footer.before || [];
 			const after = footer.after || [];
 			const buttons = {
@@ -147,7 +144,7 @@ export default class FieldForm extends React.Component {
 				reset: <Form.Reset key='reset' onClick={() => onReset()}>取消</Form.Reset>
 			}
 			return (
-				<FormItem wrapperCol={{ offset: 6 }} style={{ textAlign: aligin }}>
+				<FormItem label=" " style={{ textAlign: align }}>
 					{this.footerPushButtons(before)}
 					{actions.map(v => buttons[v])}
 					{this.footerPushButtons(after)}

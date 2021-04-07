@@ -1,12 +1,13 @@
 export default {
   type: 'brower_close',
-  name: '关闭网页',
+  title: '关闭网页',
   view: 'NodeView',
   canDraggable: true,
   canAfterAdd: true,
   canBeforeAdd: true,
   disabled: false,
   canSelect: true,
+  description: '在浏览器中关闭网页',
   initProps: {
     name: 'url',
     title: '网页地址',

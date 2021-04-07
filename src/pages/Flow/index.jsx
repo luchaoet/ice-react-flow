@@ -96,7 +96,9 @@ export default class Flow extends React.Component {
           onClose={() => this.setState({selectedNode: null})}
         >
           <FieldForm 
-            // footer={false} 
+            footer={{
+              align: 'right'
+            }}
             node={selectedNode}
             onSubmit={(v,e)=> console.log(v, e)}
           />

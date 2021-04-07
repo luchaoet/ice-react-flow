@@ -15,13 +15,13 @@ class FlowCanvas extends React.Component {
     // this.ondrag = this.ondrag.bind(this)
     // this.ondrop = this.ondrop.bind(this)
 
-    const { nodes, flowData, nodeViews } = props;
+    const { nodes, flowData, views } = props;
     this.state = {
       nodes,
-      views: nodeViews,
+      views,
       flowData,
       flowDataDocument: createFlowNode(props.flowData),
-      flowDocument: new FlowDocument({ flowData, nodes, nodeViews})
+      flowDocument: flowData.map(item => new FlowDocument({ flowData: item, nodes, views}))
     }
   }
 
@@ -60,19 +60,22 @@ class FlowCanvas extends React.Component {
     console.log('flowDocument', flowDocument)
     return (
       <div className={styles.wrap}>
-        {
-          flowDataDocument[0].children.map((node, index) => {
-            return (
-              <Node 
-                nodes={nodes}
-                views={views}
-                key={index} 
-                node={node}
-                onNodeSelect={onNodeSelect}
-              />
-            )
-          })
-        }
+        <div className={styles.content}>
+          {
+            flowDocument[0].children.map((node, index) => {
+              return (
+                <Node 
+                  nodes={nodes}
+                  views={views}
+                  key={index} 
+                  node={node}
+                  onNodeSelect={onNodeSelect}
+                />
+              )
+            })
+          }
+          {/* <p className={styles.pos}></p> */}
+        </div>
       </div>
     )
   }

@@ -19,19 +19,19 @@ export default class Node {
     this.errors = props.errors;
     this.expand = props.expand;
     this.parent = props.parent;
-    this.children = props.children;
-    this.createChildren(props);
+    this.children = this.createChildren(props.children);
   }
 
   // 处理子节点
-  createChildren(props) {
-    const children = props.children;
+  createChildren(children) {
     if (children) {
       const _children = [];
       for (const item of children) {
-        _children.push(new FlowNode({ ...item, parent: this }));
+        _children.push(new Node({ ...item, parent: this }));
       }
-      this.children = _children;
+      return _children;
+    } else {
+      return null;
     }
   }
 
@@ -107,39 +107,47 @@ export default class Node {
   // 在当前节点之后插入节点
   after(nodes) {
     const type = nodes.nodeType;
-    const id = nodes.nodeUuid;
+    const nodeUuid = nodes.nodeUuid;
+    let node = null;
+    const id = uuid();
+    const parent = this.getParentNode();
+    if (nodeUuid) {
+      const _children = this.getRoot().getChildren();
+      const moveNode = _children.find((item) => item.id === nodeUuid);
+      node = new Node({ ...moveNode, id, parent });
+    } else {
+      const _nodes = this.getRoot().getNodes();
+      const _node = _nodes.find((item) => item.type === type);
+      node = new Node({ ..._node, id, parent });
+    }
 
-    const root = this.getRoot();
-    const _children = root.getChildren();
-    const moveNode = _children.find((item) => item.id === id);
-    if (!moveNode) return;
-    const node = new FlowNode({
-      ...moveNode,
-      id: uuid(),
-    });
     const index = this.getIndex();
-    const children = this.getParentNode()?.getChildren() || [];
+    const children = parent?.getChildren() || [];
     children.splice(index + 1, 0, node);
-    this.getParentNode().setAttributes({ children });
+    parent.setAttributes({ children });
     this.forceUpdate();
   }
   // 在当前节点之前插入节点
   before(nodes) {
     const type = nodes.nodeType;
-    const id = nodes.nodeUuid;
+    const nodeUuid = nodes.nodeUuid;
+    let node = null;
+    const id = uuid();
+    const parent = this.getParentNode();
+    if (nodeUuid) {
+      const _children = this.getRoot().getChildren();
+      const moveNode = _children.find((item) => item.id === nodeUuid);
+      node = new Node({ ...moveNode, id, parent });
+    } else {
+      const _nodes = this.getRoot().getNodes();
+      const _node = _nodes.find((item) => item.type === type);
+      node = new Node({ ..._node, id, parent });
+    }
 
-    const root = this.getRoot();
-    const _children = root.getChildren();
-    const moveNode = _children.find((item) => item.id === id);
-    if (!moveNode) return;
-    const node = new FlowNode({
-      ...moveNode,
-      id: uuid(),
-    });
     const index = this.getIndex();
-    const children = this.getParentNode()?.getChildren() || [];
+    const children = parent?.getChildren() || [];
     index <= 0 ? children.unshift(node) : children.splice(index, 0, node);
-    this.getParentNode().setAttributes({ children });
+    parent.setAttributes({ children });
     this.forceUpdate();
   }
   // 删除当前节点
@@ -155,7 +163,7 @@ export default class Node {
   }
   getRoot() {
     let parent = this.getParentNode();
-    while (parent.getType() !== 'root') {
+    while (parent && parent.getType() !== 'root') {
       parent = parent.getParentNode();
     }
     return parent;

@@ -55,6 +55,8 @@ export default class Node extends React.Component {
 		if(!disabled && canSelect) {
 			node.onNodeSelect(); 
 			onNodeSelect(node);
+			const id = node.getId();
+			document.getElementById(id).scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
 		}
 	}
 
@@ -75,11 +77,12 @@ export default class Node extends React.Component {
 			}
 		)
 		const nextNode = node.getNextNode();
+		const preNode = node.getPreNode();
 		const nextNodeCanBeforeAdd = nextNode?.getValue('canBeforeAdd');
 		
     return (
 			<React.Fragment>
-				<Template show={canBeforeAdd} tag={AddLine} nextNode={node} />
+				<Template show={canBeforeAdd} tag={AddLine} preNode={preNode} nextNode={node} />
 				<ClickOutside 
 					tag='div'
 					className={className}
@@ -94,7 +97,7 @@ export default class Node extends React.Component {
 				>
 					{this.renderNodeView()}
 				</ClickOutside>
-				<Template show={canAfterAdd && !nextNodeCanBeforeAdd} tag={AddLine} preNode={node} />
+				<Template show={canAfterAdd && !nextNodeCanBeforeAdd} tag={AddLine} preNode={node} nextNode={nextNode} />
 			</React.Fragment>
     )
   }

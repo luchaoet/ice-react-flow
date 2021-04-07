@@ -26,18 +26,15 @@ export default class AddLine extends React.Component {
     let nodes = e.dataTransfer.getData("nodes");
     nodes = JSON.parse(nodes);
     const {preNode, nextNode} = this.props;
-    preNode && preNode.after(nodes);
-    nextNode && nextNode.before(nodes);
+    if(preNode) {
+      preNode.after(nodes)
+    }else if(nextNode) {
+      nextNode.before(nodes);
+    }
   }
 
   onDragOver = (e) => {
     e.preventDefault();
-  }
-
-  onAddClick = () => {
-    const {preNode, nextNode} = this.props;
-    preNode && preNode.after('close');
-    nextNode && nextNode.before('close');
   }
   
   render() {
@@ -49,7 +46,12 @@ export default class AddLine extends React.Component {
     )
     return (
       <div className={styles.wrap}>
-        <Icon type='rpaxiangxiajiantou' className={styles.arrow}/>
+        <Template 
+          show={!!preNode} 
+          tag={Icon} 
+          type="rpaxiangxiajiantou" 
+          className={styles.arrow} 
+        />
         <div 
           className={className}
           onDragEnter={this.onDragEnter} 
@@ -62,10 +64,14 @@ export default class AddLine extends React.Component {
             tag={Icon} 
             type="rpaGroup-" 
             className={styles.add_icon} 
-            // onClick={this.onAddClick} 
           />
         </div>
-        <Icon type='rpaxiangxiajiantou' className={styles.arrow}/>
+        <Template 
+          show={!!nextNode} 
+          tag={Icon} 
+          type="rpaxiangxiajiantou" 
+          className={styles.arrow} 
+        />
       </div>
     )
   }
