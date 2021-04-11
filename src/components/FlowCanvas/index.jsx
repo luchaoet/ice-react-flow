@@ -32,7 +32,7 @@ class FlowCanvas extends React.Component {
   componentDidMount() {
     document.addEventListener('dragstart', this.dragstart, true)
     window.FlowCanvas = this;
-    window.oncontextmenu = () => false;
+    // window.oncontextmenu = () => false;
   }
 
   componentWillUnmount() {
@@ -40,25 +40,25 @@ class FlowCanvas extends React.Component {
   }
 
   dragstart(e) {
-    const nodeType = e.target.attributes?.nodetype?.value;
-    const nodeUuid = e.target.attributes?.nodeuuid?.value || '';
-    e.dataTransfer.setData("nodes", JSON.stringify({nodeType, nodeUuid}));
+    const type = e.target.attributes?.nodetype?.value;
+    const id = e.target.attributes?.nodeuuid?.value || '';
+    localStorage.setItem("nodes", JSON.stringify({type, id}));
   } 
 
   onContentMouseDown = (e) => {
-    const doc = ReactDOM.findDOMNode(this);
-    doc.addEventListener('mousemove', this.onContentMouseMove, true)
+    // const doc = ReactDOM.findDOMNode(this);
+    // doc.addEventListener('mousemove', this.onContentMouseMove, true)
   }
 
   onContentMouseUp = (e) => {
-    const doc = ReactDOM.findDOMNode(this);
-    doc.removeEventListener('mousemove', this.onContentMouseMove, true)
-    this.setState({
-      areaTop: null,
-      areaLeft: null,
-      areaWidth: null,
-      areaHeight: null,
-    })
+    // const doc = ReactDOM.findDOMNode(this);
+    // doc.removeEventListener('mousemove', this.onContentMouseMove, true)
+    // this.setState({
+    //   areaTop: null,
+    //   areaLeft: null,
+    //   areaWidth: null,
+    //   areaHeight: null,
+    // })
   }
 
   onContentMouseMove(e) {
@@ -90,7 +90,6 @@ class FlowCanvas extends React.Component {
       areaHeight,
     } = this.state;
     const { onNodeSelect } = this.props;
-    console.log('areaTop', areaTop, areaLeft)
     return (
       <div className={styles.wrap}>
         <div 

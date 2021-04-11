@@ -26,13 +26,13 @@ export default class Node extends React.Component {
 
 	renderNodeView = () => {
 		const {views, node } = this.props;
-		const { view, title, description, errors } = node;
+		const { view, title, description, errors, children } = node;
 		const nvs = {
 			..._nodeViews,
 			...views
 		}
 		const Com = typeof view === 'function' ? view : nvs[view || 'default'];
-		return <Com title={title} description={description} errors={errors} />
+		return <Com title={title} description={description} errors={errors} children={children} />
 	}
 
 	get handleProps() {
@@ -61,9 +61,9 @@ export default class Node extends React.Component {
 	}
 
 	onDragstart = (e) => {
-		const nodeType = e.target.attributes?.nodetype?.value;
-    const nodeUuid = e.target.attributes?.nodeuuid?.value;
-		e.dataTransfer.setData("nodes", JSON.stringify({nodeType, nodeUuid}));
+		const type = e.target.attributes?.nodetype?.value;
+		const id = e.target.attributes?.nodeuuid?.value;
+		localStorage.setItem("nodes", JSON.stringify({type, id}));
 	}
   
   render() {
