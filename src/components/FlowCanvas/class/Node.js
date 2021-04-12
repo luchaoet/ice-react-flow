@@ -142,12 +142,12 @@ export default class Node {
       const moveNode = _children.find((item) => item.id === nodeUuid);
       node = new Node({ ...moveNode, id, parent });
       moveNode.remove();
-      Message.success('节点添加成功');
+      Message.success('节点移动成功');
     } else {
       const _nodes = this.getRoot().getNodes();
       const _node = _nodes.find((item) => item.type === type);
       node = new Node({ ..._node, id, parent });
-      Message.success('节点移动成功');
+      Message.success('节点添加成功');
     }
 
     const index = this.getIndex();
