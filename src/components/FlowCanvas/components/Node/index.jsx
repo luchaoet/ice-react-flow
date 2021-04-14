@@ -64,6 +64,7 @@ export default class Node extends React.Component {
 		const type = e.target.attributes?.nodetype?.value;
 		const id = e.target.attributes?.nodeuuid?.value;
 		localStorage.setItem("nodes", JSON.stringify({type, id}));
+		window?.FlowCanvas?.forceUpdate();
 	}
   
   render() {

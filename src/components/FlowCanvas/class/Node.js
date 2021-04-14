@@ -117,10 +117,12 @@ export default class Node {
       const moveNode = _children.find((item) => item.id === nodeUuid);
       node = new Node({ ...moveNode, id, parent });
       moveNode.remove();
+      console.log(`Node moved successfully, id: ${id}`);
     } else {
       const _nodes = this.getRoot().getNodes();
       const _node = _nodes.find((item) => item.type === type);
       node = new Node({ ..._node, id, parent });
+      console.log(`Node added successfully, id: ${id}`);
     }
 
     const index = this.getIndex();
@@ -128,7 +130,6 @@ export default class Node {
     children.splice(index + 1, 0, node);
     parent.setAttributes({ children });
     this.forceUpdate();
-    Message.success('节点添加成功');
   }
   // 在当前节点之前插入节点
   before(nodes) {
@@ -142,19 +143,18 @@ export default class Node {
       const moveNode = _children.find((item) => item.id === nodeUuid);
       node = new Node({ ...moveNode, id, parent });
       moveNode.remove();
-      Message.success('节点移动成功');
+      console.log(`Node moved successfully, id: ${id}`);
     } else {
       const _nodes = this.getRoot().getNodes();
       const _node = _nodes.find((item) => item.type === type);
       node = new Node({ ..._node, id, parent });
-      Message.success('节点添加成功');
+      console.log(`Node added successfully, id: ${id}`);
     }
 
     const index = this.getIndex();
     const children = parent?.getChildren() || [];
     index <= 0 ? children.unshift(node) : children.splice(index, 0, node);
     parent.setAttributes({ children });
-    if (nodeUuid) return node.remove();
     this.forceUpdate();
   }
   // 删除当前节点

@@ -62,13 +62,25 @@ export default class AddLine extends React.Component {
   render() {
     const { status } = this.state;
     const {preNode, nextNode } = this.props;
+    let nodes = localStorage.getItem("nodes");
+    nodes = nodes && JSON.parse(nodes);
+    const isNear = preNode && preNode?.id === nodes?.id || nextNode && nextNode?.id === nodes?.id;
+
     const className = cx(
       styles.add_wrap,
       {
         [styles.add_enter]: status === 'enter',
-        [styles.add_not_allowed]: status === 'not-allowed'
+        [styles.add_not_allowed]: isNear
       }
     )
+    
+    const event = isNear ? {} : {
+      onDragEnter: this.onDragEnter,
+      onDragLeave: this.onDragLeave,
+      onDragOver: this.onDragOver,
+      onDrop: this.onDrop
+    }
+    
     return (
       <div className={styles.wrap}>
         <Template 
@@ -79,10 +91,7 @@ export default class AddLine extends React.Component {
         />
         <div 
           className={className}
-          onDragEnter={this.onDragEnter} 
-          onDragLeave={this.onDragLeave}
-          onDragOver={this.onDragOver} 
-          onDrop={this.onDrop}
+          {...event}
         >
           <Template 
             show={status === null} 

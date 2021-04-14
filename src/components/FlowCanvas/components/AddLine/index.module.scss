@@ -32,7 +32,5 @@
   background-color: #d6fff3;
 }
 .add_not_allowed {
-  @extend .add_enter;
-  border-color: #ff3000;
-  background-color: #ffece4;
+  cursor: not-allowed;
 }
