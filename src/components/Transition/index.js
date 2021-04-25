@@ -14,33 +14,39 @@ export default class Transition extends Component {
     const { children } = props;
 
     this.state = {
-      children: children && this.enhanceChildren(children)
-    }
+      children: children && this.enhanceChildren(children),
+    };
 
     this.didEnter = this.didEnter.bind(this);
     this.didLeave = this.didLeave.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const children = React.isValidElement(this.props.children) && React.Children.only(this.props.children);
-    const nextChildren = React.isValidElement(nextProps.children) && React.Children.only(nextProps.children);
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const children =
+      React.isValidElement(this.props.children) &&
+      React.Children.only(this.props.children);
+    const nextChildren =
+      React.isValidElement(nextProps.children) &&
+      React.Children.only(nextProps.children);
 
     if (!nextProps.name) {
       this.setState({
-        children: nextChildren
+        children: nextChildren,
       });
       return;
     }
 
     if (this.isViewComponent(nextChildren)) {
       this.setState({
-        children: this.enhanceChildren(nextChildren, { show: children ? children.props.show : true })
-      })
+        children: this.enhanceChildren(nextChildren, {
+          show: children ? children.props.show : true,
+        }),
+      });
     } else {
       if (nextChildren) {
         this.setState({
-          children: this.enhanceChildren(nextChildren)
-        })
+          children: this.enhanceChildren(nextChildren),
+        });
       }
     }
   }
@@ -48,13 +54,21 @@ export default class Transition extends Component {
   componentDidUpdate(preProps) {
     if (!this.props.name) return;
 
-    const children = React.isValidElement(this.props.children) && React.Children.only(this.props.children);
-    const preChildren = React.isValidElement(preProps.children) && React.Children.only(preProps.children);
+    const children =
+      React.isValidElement(this.props.children) &&
+      React.Children.only(this.props.children);
+    const preChildren =
+      React.isValidElement(preProps.children) &&
+      React.Children.only(preProps.children);
 
     if (this.isViewComponent(children)) {
       if ((!preChildren || !preChildren.props.show) && children.props.show) {
         this.toggleVisible();
-      } else if (preChildren && preChildren.props.show && !children.props.show) {
+      } else if (
+        preChildren &&
+        preChildren.props.show &&
+        !children.props.show
+      ) {
         this.toggleHidden();
       }
     } else {
@@ -64,11 +78,20 @@ export default class Transition extends Component {
         this.toggleHidden();
       }
     }
-
   }
 
   enhanceChildren(children, props) {
-    return React.cloneElement(children, Object.assign({ ref: (el) => { this.el = el } }, props))
+    return React.cloneElement(
+      children,
+      Object.assign(
+        {
+          ref: (el) => {
+            this.el = el;
+          },
+        },
+        props
+      )
+    );
   }
 
   get transitionClass() {
@@ -81,7 +104,7 @@ export default class Transition extends Component {
       leave: `${name}-leave`,
       leaveActive: `${name}-leave-active`,
       leaveTo: `${name}-leave-to`,
-    }
+    };
   }
 
   isViewComponent(element) {
@@ -94,19 +117,23 @@ export default class Transition extends Component {
     element.classList.add(active);
 
     const styles = getComputedStyle(element);
-    const duration = parseFloat(styles['animationDuration']) || parseFloat(styles['transitionDuration']);
+    const duration =
+      parseFloat(styles['animationDuration']) ||
+      parseFloat(styles['transitionDuration']);
 
     element.classList.add(action);
 
     if (duration === 0) {
       const styles = getComputedStyle(element);
-      const duration = parseFloat(styles['animationDuration']) || parseFloat(styles['transitionDuration']);
+      const duration =
+        parseFloat(styles['animationDuration']) ||
+        parseFloat(styles['transitionDuration']);
 
       clearTimeout(this.timeout);
 
       this.timeout = setTimeout(() => {
         fn();
-      }, duration * 1000)
+      }, duration * 1000);
     }
 
     element.classList.remove(action, active);
@@ -145,18 +172,24 @@ export default class Transition extends Component {
           childDOM.classList.remove(leaveActive, leaveTo);
 
           requestAnimationFrame(resolve);
-        })
+        });
       } else {
         this.setState({ children: null }, resolve);
       }
     }).then(() => {
-      onAfterLeave && onAfterLeave()
-    })
+      onAfterLeave && onAfterLeave();
+    });
   }
 
   toggleVisible() {
     const { onEnter } = this.props;
-    const { enter, enterActive, enterTo, leaveActive, leaveTo } = this.transitionClass;
+    const {
+      enter,
+      enterActive,
+      enterTo,
+      leaveActive,
+      leaveTo,
+    } = this.transitionClass;
     const childDOM = ReactDOM.findDOMNode(this.el);
 
     childDOM.addEventListener('transitionend', this.didEnter);
@@ -181,13 +214,19 @@ export default class Transition extends Component {
       requestAnimationFrame(() => {
         childDOM.classList.remove(enter);
         childDOM.classList.add(enterTo);
-      })
-    })
+      });
+    });
   }
 
   toggleHidden() {
     const { onLeave } = this.props;
-    const { leave, leaveActive, leaveTo, enterActive, enterTo } = this.transitionClass;
+    const {
+      leave,
+      leaveActive,
+      leaveTo,
+      enterActive,
+      enterTo,
+    } = this.transitionClass;
     const childDOM = ReactDOM.findDOMNode(this.el);
 
     childDOM.addEventListener('transitionend', this.didLeave);
@@ -211,12 +250,12 @@ export default class Transition extends Component {
       requestAnimationFrame(() => {
         childDOM.classList.remove(leave);
         childDOM.classList.add(leaveTo);
-      })
-    })
+      });
+    });
   }
 
   render() {
-   return this.state.children || null;
+    return this.state.children || null;
   }
 }
 
@@ -225,5 +264,5 @@ Transition.propTypes = {
   onEnter: PropTypes.func, // triggered when enter transition start
   onAfterEnter: PropTypes.func, // triggered when enter transition end
   onLeave: PropTypes.func, // triggered when leave transition start
-  onAfterLeave: PropTypes.func // tiggered when leave transition end
+  onAfterLeave: PropTypes.func, // tiggered when leave transition end
 };

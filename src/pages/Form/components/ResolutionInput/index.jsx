@@ -10,7 +10,7 @@ class ResolutionInput extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
       const { value } = nextProps;
       this.setState({value: value});
   }

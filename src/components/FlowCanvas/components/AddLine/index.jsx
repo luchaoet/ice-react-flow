@@ -1,9 +1,10 @@
 import React from 'react';
 import Icon from '../Icon'
 import styles from './index.module.scss'
-import { delay } from '@/utils'
+import jsonParse from '../../utils/jsonParse'
 import cx from 'classnames'
 import Template from '../Template'
+import empty from '../../utils/empty';
 
 export default class AddLine extends React.Component {
 	constructor(props){
@@ -15,7 +16,7 @@ export default class AddLine extends React.Component {
 
   onDragEnter = (e) => {
     let nodes = localStorage.getItem("nodes");
-    nodes = JSON.parse(nodes);
+    nodes = jsonParse(nodes, {});
     const {preNode, nextNode} = this.props;
     // 节点不同放置在自己的前后位置
     if(
@@ -36,7 +37,7 @@ export default class AddLine extends React.Component {
     e.preventDefault();
     let nodes = localStorage.getItem("nodes");
     localStorage.removeItem('nodes');
-    nodes = nodes && JSON.parse(nodes);
+    nodes = jsonParse(nodes, null);
     const {preNode, nextNode} = this.props;
     if(
       !nodes ||
@@ -60,9 +61,9 @@ export default class AddLine extends React.Component {
   
   render() {
     const { status } = this.state;
-    const {preNode, nextNode } = this.props;
+    const {preNode, nextNode, onCreateOverlay = empty } = this.props;
     let nodes = localStorage.getItem("nodes");
-    nodes = nodes && JSON.parse(nodes);
+    nodes = jsonParse(nodes, {});
     const isNear = preNode && preNode?.id === nodes?.id || nextNode && nextNode?.id === nodes?.id;
 
     const className = cx(
@@ -96,6 +97,7 @@ export default class AddLine extends React.Component {
             tag={Icon} 
             type="rpaGroup-" 
             className={styles.add_icon} 
+            onClick={e => onCreateOverlay(e.currentTarget)}
           />
         </div>
         <Template 

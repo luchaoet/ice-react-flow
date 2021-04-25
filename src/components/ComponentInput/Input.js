@@ -97,7 +97,7 @@ class ComInputDropdown extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { defaultValue } = nextProps;
     if (!defaultValue)
       this.setState({

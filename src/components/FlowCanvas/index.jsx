@@ -96,14 +96,14 @@ class FlowCanvas extends React.Component {
       areaWidth,
       areaHeight,
     } = this.state;
-    const { onNodeSelect } = this.props;
-    console.log(flowDocument)
+    const { onNodeSelect, onCreateOverlay } = this.props;
     return (
       <div className={styles.wrap}>
         <div 
           className={styles.content} 
           onMouseDown={this.onContentMouseDown} 
           onMouseUp={this.onContentMouseUp}
+          id='FlowCanvas--content'
         >
           {
             flowDocument[0].children.map((node, index) => {
@@ -114,6 +114,7 @@ class FlowCanvas extends React.Component {
                   key={index} 
                   node={node}
                   onNodeSelect={onNodeSelect}
+                  onCreateOverlay={onCreateOverlay}
                 />
               )
             })

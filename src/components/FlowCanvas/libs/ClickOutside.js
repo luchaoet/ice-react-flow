@@ -7,7 +7,7 @@ export default class ClickOutside extends Component {
   }
   // componentDidMount() {}
   // componentWillUnmount() {}
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { selected } = nextProps;
     if (selected) {
       document.addEventListener('mousedown', this.handle, true);

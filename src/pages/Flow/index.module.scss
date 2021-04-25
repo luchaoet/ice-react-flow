@@ -3,3 +3,30 @@
   width: 100vw;
   height: 100vh;
 }
+
+.overlay {
+  width: 400px;
+  height: 250px;
+  padding: 10px;
+  color: #333;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 4px 4px 10px 0px #b2b0b0;
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    transform: rotateZ(45deg);
+    top: -9px;
+    left: calc(50% - 10px);
+  }
+}
+.isTop {
+  &:after {
+    top: auto;
+    bottom: -9px;
+  }
+}

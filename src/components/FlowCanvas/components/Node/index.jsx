@@ -62,7 +62,7 @@ export default class Node extends React.Component {
 	}
   
   render() {
-		const { node } = this.props;
+		const { node, onCreateOverlay } = this.props;
 		const { type, id, disabled, canBeforeAdd, canAfterAdd, canDraggable, canSelect, selected } = node;
 		const className = cx(
 			styles.node_wrap, 
@@ -77,7 +77,7 @@ export default class Node extends React.Component {
 		
     return (
 			<React.Fragment>
-				<Template show={canBeforeAdd} tag={AddLine} preNode={preNode} nextNode={node} />
+				<Template show={canBeforeAdd} tag={AddLine} preNode={preNode} nextNode={node} onCreateOverlay={onCreateOverlay} />
 				<ClickOutside 
 					tag='div'
 					className={className}
@@ -92,7 +92,7 @@ export default class Node extends React.Component {
 				>
 					{this.renderNodeView()}
 				</ClickOutside>
-				<Template show={canAfterAdd && !nextNodeCanBeforeAdd} tag={AddLine} preNode={node} nextNode={nextNode} />
+				<Template show={canAfterAdd && !nextNodeCanBeforeAdd} tag={AddLine} preNode={node} nextNode={nextNode} onCreateOverlay={onCreateOverlay} />
 			</React.Fragment>
     )
   }

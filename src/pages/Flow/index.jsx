@@ -4,7 +4,8 @@ import { FlowCanvas, FieldForm } from '@/components/FlowCanvas';
 import ModuleMenu from '@/components/ModuleMenu';
 import nodes from './nodes'
 import NodeView from '@/components/FlowCanvas/components/Node'
-import { Drawer } from '@alifd/next';
+import { Drawer, Overlay } from '@alifd/next';
+import cx from 'classnames'
 
 const views = {
   common: NodeView
@@ -84,12 +85,22 @@ export default class Flow extends React.Component {
 	constructor(props){
     super(props);
     this.state = {
-      selectedNode: null
+      selectedNode: null,
+      createOverlay: {
+        currentTarget: null,
+        align: 'tc'
+      }
     }
   }
   
   render() {
-    const { selectedNode } = this.state;
+    const { selectedNode, createOverlay } = this.state;
+    const overlayContentClass = cx(
+      styles.overlay, 
+      {
+        [styles.isTop]: createOverlay.align === 'bc'
+      }
+    )
     return (
       <div className={styles.wrap}>
         <ModuleMenu />
@@ -99,6 +110,12 @@ export default class Flow extends React.Component {
           nodeViews={views}
           flowData={_flowData}
           onNodeSelect={node => this.setState({selectedNode: node})}
+          onCreateOverlay={target => this.setState({
+            createOverlay: {
+              ...createOverlay,
+              currentTarget: target
+            }
+          })}
         />
         <Drawer 
           width={380}
@@ -114,6 +131,32 @@ export default class Flow extends React.Component {
             onSubmit={(v,e)=> console.log(v, e)}
           />
         </Drawer>
+        <Overlay 
+          container='FlowCanvas--content'
+          align="tc bc" 
+          shouldUpdatePosition 
+          safeNode={createOverlay.currentTarget}
+          visible={!!createOverlay.currentTarget}
+          target={createOverlay.currentTarget}
+          onRequestClose={() => this.setState({
+            createOverlay: {
+              ...createOverlay,
+              currentTarget: null,
+              align: null
+            }
+          })}
+          onPosition={config => {
+            const align = config.align[0];
+            createOverlay.align !== align && 
+            this.setState({
+            createOverlay: {
+              ...createOverlay,
+              align
+            }
+          })}}
+        >
+          <div className={overlayContentClass}>{createOverlay.align}</div>
+        </Overlay>
       </div>
     )
   }

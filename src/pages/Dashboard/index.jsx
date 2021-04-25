@@ -24,7 +24,7 @@ class Overlay extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.visible) {
       modalRoot.appendChild(this.el);
     } else {
