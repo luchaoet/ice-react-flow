@@ -18,6 +18,12 @@ const _flowData = [
     children: [
       {
         id: null,
+        type: 'startNode',
+        title: '开始',
+        description: '流程从此开始'
+      },
+      {
+        id: null,
         type: "brower_open",
         title: '打开浏览器1',
         description: '在浏览器中打来一个新的窗口',
@@ -64,6 +70,11 @@ const _flowData = [
             dataSource:[{label: '当前窗口', value: 'currentWindow'},{label: '新窗口', value: 'newWindow'}]
           }
         ],
+      },
+      {
+        type: 'endNode',
+        title: '结束',
+        description: '流程结束',
       }
     ]
   }

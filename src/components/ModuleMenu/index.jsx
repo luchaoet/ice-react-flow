@@ -1,9 +1,15 @@
 import React from 'react';
 import { Collapse } from '@alifd/next';
 import styles from './index.module.scss';
+import nodes from '@/pages/Flow/nodes'
 const Panel = Collapse.Panel;
 
-const modules = [{ name: '网页', nodes: [{ name: '打开网页', type: 'brower_open' }] }];
+const modules = [
+  { 
+    title: '网页', 
+    nodes
+  }
+];
 
 function ModuleMenu() {
   return (
@@ -11,11 +17,11 @@ function ModuleMenu() {
       <Collapse>
         {modules.map((item, index) => {
           return (
-            <Panel key={index} title={item.name}>
+            <Panel key={index} title={item.title}>
               {item.nodes.map((node, idx) => {
-                return (
+                return node.canSelect &&(
                   <p className={styles.panelList} key={node.type} nodetype={node.type} draggable="true">
-                    {node.name}
+                    {node.title}
                   </p>
                 );
               })}

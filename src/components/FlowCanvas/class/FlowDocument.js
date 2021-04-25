@@ -28,6 +28,9 @@ export default class FlowDocument {
   getChildren() {
     return this.children;
   }
+  getRoot() {
+    return this;
+  }
   setAttributes(obj) {
     for (const key in obj) {
       this[key] = obj[key];

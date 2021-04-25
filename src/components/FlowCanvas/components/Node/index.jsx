@@ -1,15 +1,16 @@
 import React from 'react';
 import AddLine from '../AddLine'
 import cx from 'classnames'
-import styles from './index.module.scss'
 import DefaultNodeView from '../NodeViews/default'
-import { Consumer } from "../../utils/context";
+import BranchNodeView from '../NodeViews/branch'
+// import { Consumer } from "../../utils/context";
 import ClickOutside from '../../libs/ClickOutside'
 import Template from '../Template'
+import styles from './index.module.scss'
 
-const nodesTemp = {}
 const _nodeViews = {
-	default: DefaultNodeView
+	default: DefaultNodeView,
+	branch: BranchNodeView
 }
 
 export default class Node extends React.Component {
@@ -59,16 +60,9 @@ export default class Node extends React.Component {
 			document.getElementById(id).scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
 		}
 	}
-
-	onDragstart = (e) => {
-		const type = e.target.attributes?.nodetype?.value;
-		const id = e.target.attributes?.nodeuuid?.value;
-		localStorage.setItem("nodes", JSON.stringify({type, id}));
-		window?.FlowCanvas?.forceUpdate();
-	}
   
   render() {
-	  const { node } = this.props;
+		const { node } = this.props;
 		const { type, id, disabled, canBeforeAdd, canAfterAdd, canDraggable, canSelect, selected } = node;
 		const className = cx(
 			styles.node_wrap, 
@@ -94,7 +88,7 @@ export default class Node extends React.Component {
 					selected={selected}
 					draggable={canDraggable}
 					onClickOutside={this.onClickOutside}
-					onDragStart={e => this.onDragstart(e)}
+					// onDragStart={e => this.onDragstart(e)} // 放到全局监听
 				>
 					{this.renderNodeView()}
 				</ClickOutside>

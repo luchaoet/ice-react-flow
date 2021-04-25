@@ -54,12 +54,12 @@ export default class FieldForm extends React.Component {
 		}
 
 		renderLabel = (props) => {
-			const { tips, label } = props;
+			const { tips, title } = props;
 			return (
 				<div style={{
 					display: 'inline-flex'
 				}}>
-					<p>{label}</p>
+					<p>{title}</p>
 					{
 						tips && 
 						<Balloon trigger={<Icon size='small' type="help" />} closable={false}>
@@ -81,9 +81,11 @@ export default class FieldForm extends React.Component {
 			const { propsConfig } = this.state;
 			const { getValues } = this.field;
 
+			console.log('propsConfig', propsConfig)
+
 			return propsConfig.map((props, index) => {
 				const { 
-					name, label, tips, required, component, help, 
+					name, title, tips, required, component, help, 
 					pattern, patternMessage, validator, 
 					disabled = false, 
 					hidden = false,
@@ -92,7 +94,7 @@ export default class FieldForm extends React.Component {
 				// 组件id或自定义组件
 				const Com = typeof component === 'string' ? components[component] : component;
 				// 空值提示
-				const requiredMessage = required ? `${label} 是必填字段` : null;
+				const requiredMessage = required ? `${title} 是必填字段` : null;
 				// 自定义校验函数或正则
 				let _validator = null;
 				if(validator) {
@@ -100,7 +102,7 @@ export default class FieldForm extends React.Component {
 				}else if(pattern) {
 					_validator = (rule, value, callback) => {
 						if(!value && !required) callback()
-						return pattern.test(value) ? callback() : callback(patternMessage || `${label} 格式错误`)
+						return pattern.test(value) ? callback() : callback(patternMessage || `${title} 格式错误`)
 					}
 				}
 				const values = getValues();

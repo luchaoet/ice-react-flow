@@ -10,7 +10,7 @@
   border-style: solid;
   border-color: transparent;
   box-shadow: 4px 4px 10px 0px #b2b0b0;
-  &:hover {
+  &:not(.disabled):hover {
     border-color: #869efc;
   }
 }

@@ -13,13 +13,13 @@ class FlowCanvas extends React.Component {
 	constructor(props){
 		super(props);
     this.dragstart = this.dragstart.bind(this);
+    // this.dragover = this.dragover.bind(this);
     this.onContentMouseMove = this.onContentMouseMove.bind(this);
     const { nodes, flowData, views } = props;
     this.state = {
       nodes,
       views,
       flowData,
-      flowDataDocument: createFlowNode(props.flowData),
       flowDocument: flowData.map(item => new FlowDocument({ flowData: item, nodes, views})),
 
       areaTop: null,
@@ -31,19 +31,27 @@ class FlowCanvas extends React.Component {
 
   componentDidMount() {
     document.addEventListener('dragstart', this.dragstart, true)
+    // document.addEventListener('dragover', this.dragover, true)
     window.FlowCanvas = this;
     // window.oncontextmenu = () => false;
   }
 
   componentWillUnmount() {
     document.removeEventListener('dragstart', this.dragstart, true)
+    // document.removeEventListener('dragover', this.dragover, true)
   }
 
   dragstart(e) {
     const type = e.target.attributes?.nodetype?.value;
     const id = e.target.attributes?.nodeuuid?.value || '';
     localStorage.setItem("nodes", JSON.stringify({type, id}));
+    window?.FlowCanvas?.forceUpdate();
   } 
+
+  // dragover(e) {
+  //   // const nodes = localStorage.getItem("nodes")
+  //   // console.log(e)
+  // }
 
   onContentMouseDown = (e) => {
     // const doc = ReactDOM.findDOMNode(this);
@@ -82,7 +90,6 @@ class FlowCanvas extends React.Component {
     const { 
       nodes, 
       views, 
-      flowDataDocument, 
       flowDocument,
       areaTop,
       areaLeft,
@@ -90,6 +97,7 @@ class FlowCanvas extends React.Component {
       areaHeight,
     } = this.state;
     const { onNodeSelect } = this.props;
+    console.log(flowDocument)
     return (
       <div className={styles.wrap}>
         <div 

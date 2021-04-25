@@ -3,26 +3,35 @@ import { Message } from '@alifd/next';
 
 export default class Node {
   constructor(props = {}) {
-    this.type = props.type;
+    const _props = this.handleProps(props);
     this.id = uuid();
-    this.title = props.title;
-    this.description = props.description;
-    this.view = props.view || 'default';
-    this.canDraggable = props.canDraggable || true;
-    this.canAfterAdd = props.canAfterAdd || true;
-    this.canBeforeAdd = props.canBeforeAdd || true;
-    this.disabled = props.disabled || false;
-    this.canSelect = props.canSelect || true;
-    this.nodes = props.nodes || [];
-    this.selected = props.selected || false;
-    this.initProps = props.initProps || [];
-    this.values = props.values;
-    this.errors = props.errors;
-    this.expand = props.expand;
-    this.parent = props.parent;
-    this.children = this.createChildren(props.children);
+    this.type = _props.type;
+    this.title = _props.title;
+    this.description = _props.description;
+    this.view = _props.view || 'default';
+    this.canDraggable = _props.canDraggable ?? true;
+    this.canAfterAdd = _props.canAfterAdd ?? true;
+    this.canBeforeAdd = _props.canBeforeAdd ?? true;
+    this.disabled = _props.disabled ?? false;
+    this.canSelect = _props.canSelect ?? true;
+    this.nodes = _props.nodes || [];
+    this.selected = _props.selected ?? false;
+    this.initProps = _props.initProps || [];
+    this.values = _props.values;
+    this.errors = _props.errors;
+    this.expand = _props.expand;
+    this.parent = _props.parent;
+    this.children = this.createChildren(_props.children);
   }
-
+  handleProps(props) {
+    const nodes = props.parent.getRoot().nodes;
+    const _props = nodes.find((v) => v.type === props.type) || {};
+    return { ...props, ..._props };
+  }
+  getDefaultNodeProps(type) {
+    const nodes = this.getRoot().nodes;
+    return nodes.find((v) => v.type === type);
+  }
   // 处理子节点
   createChildren(children) {
     if (children) {
@@ -49,7 +58,6 @@ export default class Node {
       this.initProps = initProps;
     }
   }
-
   getParentNode() {
     return this.parent;
   }
@@ -124,7 +132,6 @@ export default class Node {
       node = new Node({ ..._node, id, parent });
       console.log(`Node added successfully, id: ${id}`);
     }
-
     const index = this.getIndex();
     const children = parent?.getChildren() || [];
     children.splice(index + 1, 0, node);
@@ -150,7 +157,6 @@ export default class Node {
       node = new Node({ ..._node, id, parent });
       console.log(`Node added successfully, id: ${id}`);
     }
-
     const index = this.getIndex();
     const children = parent?.getChildren() || [];
     index <= 0 ? children.unshift(node) : children.splice(index, 0, node);

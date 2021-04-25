@@ -1,7 +1,6 @@
 export default {
   type: 'brower_close',
   title: '关闭网页',
-  view: 'NodeView',
   canDraggable: true,
   canAfterAdd: true,
   canBeforeAdd: true,

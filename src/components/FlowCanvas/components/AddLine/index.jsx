@@ -38,7 +38,6 @@ export default class AddLine extends React.Component {
     localStorage.removeItem('nodes');
     nodes = nodes && JSON.parse(nodes);
     const {preNode, nextNode} = this.props;
-
     if(
       !nodes ||
       (preNode && preNode.id === nodes?.id) || 
@@ -69,12 +68,11 @@ export default class AddLine extends React.Component {
     const className = cx(
       styles.add_wrap,
       {
-        [styles.add_enter]: status === 'enter',
-        [styles.add_not_allowed]: isNear
+        [styles.add_enter]: status === 'enter'
       }
     )
     
-    const event = isNear ? {} : {
+    const dragEvent = isNear ? {} : {
       onDragEnter: this.onDragEnter,
       onDragLeave: this.onDragLeave,
       onDragOver: this.onDragOver,
@@ -91,7 +89,7 @@ export default class AddLine extends React.Component {
         />
         <div 
           className={className}
-          {...event}
+          {...dragEvent}
         >
           <Template 
             show={status === null} 
