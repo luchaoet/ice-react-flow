@@ -129,7 +129,7 @@ export default [
     type: 'brower_open5',
     title: '条件分支',
     view: 'branch',
-    icon: { type: 'iconwordcaozuo-keshihua' },
+    icon: { type: 'iconcanshumianban-keshihua' },
     canDraggable: true,
     canAfterAdd: true,
     canBeforeAdd: true,
