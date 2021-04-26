@@ -4,7 +4,7 @@ import Drawer from './setter';
 export default {
   type: 'brower_close',
   name: '关闭网页',
-  initProps: { key: '' },
+  initProps: [{ key: '' }],
   NodeView,
   Drawer,
 };

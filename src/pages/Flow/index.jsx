@@ -4,8 +4,9 @@ import { FlowCanvas, FieldForm } from '@/components/FlowCanvas';
 import ModuleMenu from '@/components/ModuleMenu';
 import nodes from './nodes'
 import NodeView from '@/components/FlowCanvas/components/Node'
-import { Drawer, Overlay } from '@alifd/next';
-import cx from 'classnames'
+import { Drawer } from '@alifd/next';
+
+import CreateOverlay from './components/CreateOverlay'
 
 const views = {
   common: NodeView
@@ -80,27 +81,29 @@ const _flowData = [
     ]
   }
 ]
+const defaultCreateOverlay = {
+  target: null,
+  align: 'tc',
+  preNode: null, 
+  nextNode: null
+}
 
 export default class Flow extends React.Component {
 	constructor(props){
     super(props);
     this.state = {
       selectedNode: null,
-      createOverlay: {
-        currentTarget: null,
-        align: 'tc'
-      }
+      createOverlay: defaultCreateOverlay
     }
+  }
+
+  onRequestClose = () => {
+    this.setState({createOverlay: defaultCreateOverlay})
   }
   
   render() {
     const { selectedNode, createOverlay } = this.state;
-    const overlayContentClass = cx(
-      styles.overlay, 
-      {
-        [styles.isTop]: createOverlay.align === 'bc'
-      }
-    )
+    
     return (
       <div className={styles.wrap}>
         <ModuleMenu />
@@ -110,10 +113,12 @@ export default class Flow extends React.Component {
           nodeViews={views}
           flowData={_flowData}
           onNodeSelect={node => this.setState({selectedNode: node})}
-          onCreateOverlay={target => this.setState({
+          onCreateOverlay={v => this.setState({
             createOverlay: {
               ...createOverlay,
-              currentTarget: target
+              target: v.target,
+              preNode: v.preNode,
+              nextNode: v.nextNode,
             }
           })}
         />
@@ -131,32 +136,8 @@ export default class Flow extends React.Component {
             onSubmit={(v,e)=> console.log(v, e)}
           />
         </Drawer>
-        <Overlay 
-          container='FlowCanvas--content'
-          align="tc bc" 
-          shouldUpdatePosition 
-          safeNode={createOverlay.currentTarget}
-          visible={!!createOverlay.currentTarget}
-          target={createOverlay.currentTarget}
-          onRequestClose={() => this.setState({
-            createOverlay: {
-              ...createOverlay,
-              currentTarget: null,
-              align: null
-            }
-          })}
-          onPosition={config => {
-            const align = config.align[0];
-            createOverlay.align !== align && 
-            this.setState({
-            createOverlay: {
-              ...createOverlay,
-              align
-            }
-          })}}
-        >
-          <div className={overlayContentClass}>{createOverlay.align}</div>
-        </Overlay>
+
+        <CreateOverlay onRequestClose={this.onRequestClose} dataSource={createOverlay} />
       </div>
     )
   }

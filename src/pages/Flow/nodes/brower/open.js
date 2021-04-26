@@ -1,6 +1,7 @@
 export default {
   type: 'brower_open',
   title: '打开网页',
+  icon: { type: 'iconliulanqi-keshihua' },
   canDraggable: true,
   canBeforeAdd: true,
   canAfterAdd: true,

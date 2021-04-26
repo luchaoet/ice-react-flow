@@ -85,7 +85,7 @@ export default class AddLine extends React.Component {
         <Template 
           show={!!preNode} 
           tag={Icon} 
-          type="rpaxiangxiajiantou" 
+          type="iconxiala" 
           className={styles.arrow} 
         />
         <div 
@@ -95,15 +95,15 @@ export default class AddLine extends React.Component {
           <Template 
             show={status === null} 
             tag={Icon} 
-            type="rpaGroup-" 
+            type="iconzengjia" 
             className={styles.add_icon} 
-            onClick={e => onCreateOverlay(e.currentTarget)}
+            onClick={e => onCreateOverlay({target: e.currentTarget, preNode, nextNode})}
           />
         </div>
         <Template 
           show={!!nextNode} 
           tag={Icon} 
-          type="rpaxiangxiajiantou" 
+          type="iconxiala" 
           className={styles.arrow} 
         />
       </div>

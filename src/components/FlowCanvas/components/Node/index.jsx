@@ -27,13 +27,13 @@ export default class Node extends React.Component {
 
 	renderNodeView = () => {
 		const {views, node } = this.props;
-		const { view, title, description, errors, children } = node;
+		const { view, title, description, errors, children, icon } = node;
 		const nvs = {
 			..._nodeViews,
 			...views
 		}
 		const Com = typeof view === 'function' ? view : nvs[view || 'default'];
-		return <Com title={title} description={description} errors={errors} children={children} />
+		return <Com title={title} description={description} errors={errors} children={children} icon={icon} />
 	}
 
 	get handleProps() {

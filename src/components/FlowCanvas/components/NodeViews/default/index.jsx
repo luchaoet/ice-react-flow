@@ -18,12 +18,12 @@ export default class DefaultNodeView extends React.Component {
 		)
 	}
   render() {
-		const {title, description, errors, children} = this.props;
+		const {title, description, errors, children, icon={}} = this.props;
 		const trigger = <Template show={!!errors} tag={Icon} className={styles.tips} type="rpayunhangzhuangtai-yichang" />
     return (
 			<>
 				<div className={styles.node_title_wrap}>
-					<Icon className={styles.icon} type="rpaliulanqi" />
+					<Icon className={styles.icon} type={icon?.type} />
 					<p className={styles.title}>{title}</p>
 					<Tooltip trigger={trigger} align="t">{this.handleErrors(errors)}</Tooltip>
 					<Template show={!!children} tag={Icon} className={styles.expand} type="rpaxiangxiazhanhang" />

@@ -1,5 +1,5 @@
 import uuid from '../utils/uuid';
-import { Message } from '@alifd/next';
+// import { Notification } from '@alifd/next';
 
 export default class Node {
   constructor(props = {}) {
@@ -21,6 +21,7 @@ export default class Node {
     this.errors = _props.errors;
     this.expand = _props.expand;
     this.parent = _props.parent;
+    this.icon = _props.icon;
     this.children = this.createChildren(_props.children);
   }
   handleProps(props) {
