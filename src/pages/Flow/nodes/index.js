@@ -13,7 +13,7 @@ export default [
   {
     type: 'startNode',
     title: '开始',
-    icon: { type: 'iconkaishijiedian' },
+    icon: { type: 'rpakaishijiedian' },
     canDraggable: false,
     canAfterAdd: true,
     canBeforeAdd: false,
@@ -23,7 +23,7 @@ export default [
   {
     type: 'endNode',
     title: '结束',
-    icon: { type: 'iconjieshujiedian' },
+    icon: { type: 'rpajieshujiedian' },
     canDraggable: false,
     canAfterAdd: false,
     canBeforeAdd: true,
@@ -33,7 +33,7 @@ export default [
   {
     type: 'brower_close1',
     title: '捕获窗口',
-    icon: { type: 'iconbuzhuokongjian' },
+    icon: { type: 'rpabuzhuokongjian' },
     canDraggable: true,
     canAfterAdd: true,
     canBeforeAdd: true,
@@ -52,7 +52,7 @@ export default [
   {
     type: 'brower_open1',
     title: '输入热键',
-    icon: { type: 'iconxiangsikongjian' },
+    icon: { type: 'rpaxiangsikongjian' },
     canDraggable: true,
     canAfterAdd: true,
     canBeforeAdd: true,
@@ -71,7 +71,7 @@ export default [
   {
     type: 'brower_open2',
     title: '读取参数面板',
-    icon: { type: 'iconbiancheng-keshihua' },
+    icon: { type: 'rpabiancheng-keshihua' },
     canDraggable: true,
     canAfterAdd: true,
     canBeforeAdd: true,
@@ -90,7 +90,7 @@ export default [
   {
     type: 'brower_open3',
     title: '获取文本',
-    icon: { type: 'iconliucheng-keshihua' },
+    icon: { type: 'rpaliucheng-keshihua' },
     canDraggable: true,
     canAfterAdd: true,
     canBeforeAdd: true,
@@ -109,7 +109,7 @@ export default [
   {
     type: 'brower_open4',
     title: '打开Excel',
-    icon: { type: 'iconcanshumianban-keshihua' },
+    icon: { type: 'rpacanshumianban-keshihua' },
     canDraggable: true,
     canAfterAdd: true,
     canBeforeAdd: true,
@@ -129,7 +129,7 @@ export default [
     type: 'brower_open5',
     title: '条件分支',
     view: 'branch',
-    icon: { type: 'iconcanshumianban-keshihua' },
+    icon: { type: 'rpacanshumianban-keshihua' },
     canDraggable: true,
     canAfterAdd: true,
     canBeforeAdd: true,

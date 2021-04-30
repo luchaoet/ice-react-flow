@@ -45,14 +45,22 @@ export default class Node extends React.Component {
 		}
 	}
 
-	onClickOutside = () => {
+	onClickOutside = (e) => {
+		const { shiftKey } = e;
+		if(shiftKey)return;
 		const { node } = this.props;
 		node.setAttributes({selected: false})
 	}
 
-	onNodeClick = () => {
+	onNodeClick = (e) => {
+		const { shiftKey } = e;
 		const {node, onNodeSelect} = this.props;
 		const { disabled, canSelect }= node;
+		// if(e.shiftKey) {
+		// 	node.onNodeSelect(); 
+		// }else{
+		// 	// node.onNodeSelect();
+		// }
 		if(!disabled && canSelect) {
 			node.onNodeSelect(); 
 			onNodeSelect(node);
@@ -77,7 +85,7 @@ export default class Node extends React.Component {
 		
     return (
 			<React.Fragment>
-				<Template show={canBeforeAdd} tag={AddLine} preNode={preNode} nextNode={node} onCreateOverlay={onCreateOverlay} />
+				<Template show={canBeforeAdd} component={AddLine} preNode={preNode} nextNode={node} onCreateOverlay={onCreateOverlay} />
 				<ClickOutside 
 					tag='div'
 					className={className}
@@ -92,7 +100,7 @@ export default class Node extends React.Component {
 				>
 					{this.renderNodeView()}
 				</ClickOutside>
-				<Template show={canAfterAdd && !nextNodeCanBeforeAdd} tag={AddLine} preNode={node} nextNode={nextNode} onCreateOverlay={onCreateOverlay} />
+				<Template show={canAfterAdd && !nextNodeCanBeforeAdd} component={AddLine} preNode={node} nextNode={nextNode} onCreateOverlay={onCreateOverlay} />
 			</React.Fragment>
     )
   }

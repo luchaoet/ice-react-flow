@@ -84,8 +84,8 @@ export default class AddLine extends React.Component {
       <div className={styles.wrap}>
         <Template 
           show={!!preNode} 
-          tag={Icon} 
-          type="iconxiala" 
+          component={Icon} 
+          type="rpaxiangxiajiantou" 
           className={styles.arrow} 
         />
         <div 
@@ -94,16 +94,16 @@ export default class AddLine extends React.Component {
         >
           <Template 
             show={status === null} 
-            tag={Icon} 
-            type="iconzengjia" 
+            component={Icon} 
+            type="rpazengjia" 
             className={styles.add_icon} 
             onClick={e => onCreateOverlay({target: e.currentTarget, preNode, nextNode})}
           />
         </div>
         <Template 
           show={!!nextNode} 
-          tag={Icon} 
-          type="iconxiala" 
+          component={Icon} 
+          type="rpaxiangxiajiantou" 
           className={styles.arrow} 
         />
       </div>

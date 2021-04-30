@@ -54,25 +54,25 @@ class FlowCanvas extends React.Component {
   // }
 
   onContentMouseDown = (e) => {
-    // const doc = ReactDOM.findDOMNode(this);
-    // doc.addEventListener('mousemove', this.onContentMouseMove, true)
+    // document.addEventListener('mousemove', this.onContentMouseMove, true)
   }
 
   onContentMouseUp = (e) => {
-    // const doc = ReactDOM.findDOMNode(this);
-    // doc.removeEventListener('mousemove', this.onContentMouseMove, true)
-    // this.setState({
-    //   areaTop: null,
-    //   areaLeft: null,
-    //   areaWidth: null,
-    //   areaHeight: null,
-    // })
+    document.removeEventListener('mousemove', this.onContentMouseMove, true)
+    this.setState({
+      areaTop: null,
+      areaLeft: null,
+      areaWidth: null,
+      areaHeight: null,
+    })
   }
 
   onContentMouseMove(e) {
+
+    return console.log(e)
     const { areaTop, areaLeft } = this.state;
     const { offsetX, offsetY } = e || window.event || {};
-    // console.log(e)
+    console.log(offsetX, offsetY)
     if(areaTop && areaLeft) {
       this.setState({
         areaWidth: offsetX - areaTop,
@@ -120,7 +120,7 @@ class FlowCanvas extends React.Component {
             })
           }
           <Template 
-            tag='p' 
+            component='p' 
             show={areaTop && areaLeft} 
             className={styles.area} 
             style={{

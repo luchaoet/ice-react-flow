@@ -81,8 +81,6 @@ export default class FieldForm extends React.Component {
 			const { propsConfig } = this.state;
 			const { getValues } = this.field;
 
-			console.log('propsConfig', propsConfig)
-
 			return propsConfig.map((props, index) => {
 				const { 
 					name, title, tips, required, component, help, 

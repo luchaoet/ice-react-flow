@@ -1,7 +1,7 @@
 export default {
   type: 'brower_close',
   title: '关闭网页',
-  icon: { type: 'iconshubiaojianpan-keshihua' },
+  icon: { type: 'rpashubiaojianpan-keshihua' },
   canDraggable: true,
   canAfterAdd: true,
   canBeforeAdd: true,
