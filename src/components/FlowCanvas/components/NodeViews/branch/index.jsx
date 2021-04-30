@@ -28,7 +28,18 @@ export default class DefaultNodeView extends React.Component {
 					<Tooltip trigger={trigger} align="t">{this.handleErrors(errors)}</Tooltip>
 					<Template show={!!children} component={Icon} className={styles.expand} type="rpaxiangxiazhanhang" />
 				</div>
-				<div className={styles.ifContent}>content</div>
+				<div className={styles.ifContent}>
+					<dl>
+						<dt>IF</dt>
+						<dd>
+
+						</dd>
+					</dl>
+					<dl>
+						<dt>ELSE</dt>
+						<dd></dd>
+					</dl>
+				</div>
 				<div className={styles.node_description}>
 					{description}
 				</div>

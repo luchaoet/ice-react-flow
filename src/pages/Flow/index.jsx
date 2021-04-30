@@ -52,9 +52,9 @@ const _flowData = [
       },
       {
         id: null,
-        type: "brower_open",
-        title: '打开浏览器2',
-        description: '在浏览器中打来一个新的窗口',
+        type: "brower_open5",
+        title: '条件分支',
+        description: '条件分支',
         initProps: [
           {
             name: 'url',
