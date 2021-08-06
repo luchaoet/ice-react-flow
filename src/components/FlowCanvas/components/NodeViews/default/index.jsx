@@ -21,7 +21,7 @@ export default class DefaultNodeView extends React.Component {
 		const {title, description, errors, children, icon={}} = this.props;
 		const trigger = <Template show={!!errors} component={Icon} className={styles.tips} type="rpayunhangzhuangtai-yichang" />
     return (
-			<>
+			<div className={styles.wrap}>
 				<div className={styles.node_title_wrap}>
 					<Icon className={styles.icon} type={icon?.type} />
 					<p className={styles.title}>{title}</p>
@@ -31,7 +31,7 @@ export default class DefaultNodeView extends React.Component {
 				<div className={styles.node_description}>
 					{description}
 				</div>
-			</>
+			</div>
     )
   }
 }

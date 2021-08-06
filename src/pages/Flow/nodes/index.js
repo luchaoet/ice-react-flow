@@ -39,6 +39,45 @@ export default [
     canBeforeAdd: true,
     disabled: false,
     canSelect: true,
+    description:
+      '在浏览器中关闭网页在浏览器中关闭网页在浏览器中关闭网页在浏览器中关闭网页在浏览器中关闭网页',
+    initProps: [
+      {
+        name: 'url',
+        title: '网页地址',
+        component: 'Input',
+        defaultValue: 'www.baidu.com',
+      },
+    ],
+  },
+  {
+    type: 'brower_close2',
+    title: '最大化窗口',
+    icon: { type: 'rpabuzhuokongjian' },
+    canDraggable: true,
+    canAfterAdd: true,
+    canBeforeAdd: true,
+    disabled: false,
+    canSelect: true,
+    description: '在浏览器中关闭网页',
+    initProps: [
+      {
+        name: 'url',
+        title: '网页地址',
+        component: 'Input',
+        defaultValue: 'www.baidu.com',
+      },
+    ],
+  },
+  {
+    type: 'brower_close3',
+    title: '最小化窗口',
+    icon: { type: 'rpabuzhuokongjian' },
+    canDraggable: true,
+    canAfterAdd: true,
+    canBeforeAdd: true,
+    disabled: false,
+    canSelect: true,
     description: '在浏览器中关闭网页',
     initProps: [
       {

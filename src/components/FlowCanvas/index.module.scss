@@ -10,7 +10,8 @@
   padding: 20px;
   height: auto;
   min-height: 100%;
-  display: flex;
+  min-width: 100%;
+  display: inline-flex;
   flex-direction: column;
 }
 .area {

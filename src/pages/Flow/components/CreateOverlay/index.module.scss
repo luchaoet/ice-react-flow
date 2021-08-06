@@ -1,7 +1,6 @@
 .overlay {
-  width: 400px;
-  height: 250px;
-  padding: 16px 10px;
+  width: 480px;
+  padding: 16px;
   color: #333;
   border-radius: 6px;
   background-color: #fff;
@@ -27,15 +26,59 @@
 .itemWrap {
   height: calc(100% - 30px);
   overflow-y: auto;
-  padding-top: 10px;
+  margin-top: 10px;
+  max-height: 224px;
 }
 .item {
   display: flex;
   align-items: center;
   cursor: pointer;
-  line-height: 30px;
-  p,
-  span {
-    margin-left: 5px;
+  line-height: 28px;
+  padding: 0 10px;
+  div {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(220, 95, 95, 0.6);
+    border: 1px solid;
+    border-color: rgb(220, 95, 95);
+    color: rgb(255, 255, 255);
+    border-radius: 3px;
+    margin-right: 5px;
   }
+  p {
+    color: #000;
+    font-weight: 600;
+    margin-right: 14px;
+    max-width: 160px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 12px;
+  }
+  span {
+    transition: color 0.1s;
+    opacity: 0.8;
+    color: #bababf;
+    flex-grow: 1;
+    max-width: 343px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+  &:hover {
+    background-color: #eef3f9;
+    border-radius: 3px;
+    span {
+      color: #59575c;
+    }
+  }
+}
+.empty {
+  padding: 20px 0 0;
+  display: flex;
+  justify-content: center;
 }

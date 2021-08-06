@@ -62,6 +62,7 @@ export default class Node extends React.Component {
 		// 	// node.onNodeSelect();
 		// }
 		if(!disabled && canSelect) {
+			console.log(node)
 			node.onNodeSelect(); 
 			onNodeSelect(node);
 			const id = node.getId();

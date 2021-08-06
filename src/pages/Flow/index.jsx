@@ -122,7 +122,7 @@ export default class Flow extends React.Component {
             }
           })}
         />
-        <Drawer 
+        {/* <Drawer 
           width={380}
           title={selectedNode?.title}
           visible={!!selectedNode}
@@ -133,7 +133,15 @@ export default class Flow extends React.Component {
             node={selectedNode}
             onSubmit={(v,e)=> console.log(v, e)}
           />
-        </Drawer>
+        </Drawer> */}
+
+        <div className={styles.form}>
+          {selectedNode && <FieldForm 
+            footer={false}
+            node={selectedNode}
+            onSubmit={(v,e)=> console.log(v, e)}
+          />}
+        </div>
 
         <CreateOverlay onRequestClose={this.onRequestClose} dataSource={createOverlay} />
       </div>
